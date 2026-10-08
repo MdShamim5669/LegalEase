@@ -22,6 +22,7 @@ import { apiClient } from "@/lib/api-client";
 import { formatBDT, formatDhakaTime } from "@/lib/utils";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { LegalDisclaimerBanner } from "@/components/common/LegalDisclaimerBanner";
+import { PaymentGatewayModal } from "@/components/common/PaymentGatewayModal";
 
 function ConsultationDetailContent() {
   const params = useParams();
@@ -33,6 +34,7 @@ function ConsultationDetailContent() {
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewComment, setReviewComment] = useState("");
   const [reviewStatus, setReviewStatus] = useState<string | null>(null);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   // 1. Fetch consultation details
   const { data: consultationRes, isLoading, refetch } = useQuery({
@@ -190,11 +192,20 @@ function ConsultationDetailContent() {
             </div>
 
             {c?.payment?.status === "UNPAID" ? (
-              <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs max-w-md mx-auto flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
-                <span>
-                  Please complete payment before joining the live video session.
-                </span>
+              <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs max-w-md mx-auto flex flex-col items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
+                  <span>
+                    Please complete payment before joining the live video session.
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsPaymentModalOpen(true)}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold transition shadow-sm"
+                >
+                  <CreditCard className="w-4 h-4" /> Pay Now ({formatBDT(c?.payment?.amount || 1500)})
+                </button>
               </div>
             ) : (
               <a
@@ -299,11 +310,11 @@ function ConsultationDetailContent() {
 
               {c?.payment?.status === "UNPAID" && (
                 <button
-                  onClick={() => payMutation.mutate()}
-                  disabled={payMutation.isPending}
-                  className="w-full mt-2 py-3 bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white font-bold rounded-xl transition"
+                  type="button"
+                  onClick={() => setIsPaymentModalOpen(true)}
+                  className="w-full mt-2 py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition flex items-center justify-center gap-2 shadow-sm"
                 >
-                  Pay via Online Gateway
+                  <CreditCard className="w-4 h-4" /> Pay via Stripe / SSLCommerz
                 </button>
               )}
             </div>
@@ -371,6 +382,18 @@ function ConsultationDetailContent() {
           </div>
         )}
       </div>
+
+      {/* Payment Gateway Selector Modal (Stripe & SSLCommerz) */}
+      <PaymentGatewayModal
+        isOpen={isPaymentModalOpen}
+        onClose={() => {
+          setIsPaymentModalOpen(false);
+          refetch();
+        }}
+        consultationId={id}
+        advocateName={c?.lawyer?.name || "Advocate"}
+        amount={c?.payment?.amount || 1500}
+      />
     </div>
   );
 }

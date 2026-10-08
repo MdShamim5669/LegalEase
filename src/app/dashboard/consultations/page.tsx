@@ -7,9 +7,15 @@ import { Calendar, Video, FileText, ArrowRight, Filter, Clock, CreditCard } from
 import { apiClient } from "@/lib/api-client";
 import { formatBDT, formatDhakaTime } from "@/lib/utils";
 import { StatusBadge } from "@/components/common/StatusBadge";
+import { PaymentGatewayModal } from "@/components/common/PaymentGatewayModal";
 
 export default function ConsultationsListPage() {
   const [statusFilter, setStatusFilter] = useState<string>("ALL");
+  const [paymentModalData, setPaymentModalData] = useState<{
+    id: string;
+    advocateName: string;
+    amount: number;
+  } | null>(null);
 
   const { data: consultationsRes, isLoading } = useQuery({
     queryKey: ["consultations", statusFilter],
@@ -121,12 +127,18 @@ export default function ConsultationsListPage() {
 
                   <div className="flex items-center gap-2">
                     {c.payment?.status === "UNPAID" && (
-                      <Link
-                        href={`/dashboard/consultations/${c.id}`}
-                        className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition shadow-xs flex items-center gap-1"
+                      <button
+                        onClick={() =>
+                          setPaymentModalData({
+                            id: c.id,
+                            advocateName,
+                            amount: fee,
+                          })
+                        }
+                        className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition shadow-xs flex items-center gap-1 cursor-pointer"
                       >
                         <CreditCard className="w-3.5 h-3.5" /> Pay Now
-                      </Link>
+                      </button>
                     )}
                     <Link
                       href={`/dashboard/consultations/${c.id}`}
@@ -155,6 +167,17 @@ export default function ConsultationsListPage() {
           </div>
         )}
       </div>
+
+      {/* Payment Gateway Modal */}
+      {paymentModalData && (
+        <PaymentGatewayModal
+          isOpen={!!paymentModalData}
+          onClose={() => setPaymentModalData(null)}
+          consultationId={paymentModalData.id}
+          advocateName={paymentModalData.advocateName}
+          amount={paymentModalData.amount}
+        />
+      )}
     </div>
   );
 }
