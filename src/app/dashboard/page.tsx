@@ -93,21 +93,18 @@ export default function DashboardOverviewPage() {
           </p>
         </div>
 
-        {/* Quick Role View Switcher */}
-        <div className="flex items-center gap-1.5 bg-white p-1 rounded-xl border border-slate-200">
-          {(["CLIENT", "LAWYER", "ADMIN"] as const).map((r) => (
-            <button
-              key={r}
-              onClick={() => setRoleView(r)}
-              className={`px-3 py-1.5 text-xs font-bold rounded-lg transition ${
-                roleView === r
-                  ? "bg-slate-900 text-white shadow-xs"
-                  : "text-slate-500 hover:text-slate-900"
-              }`}
-            >
-              {r === "CLIENT" ? "Client View" : r === "LAWYER" ? "Lawyer View" : "Admin View"}
-            </button>
-          ))}
+        {/* Verified Account Badge */}
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold shadow-xs">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>
+              {roleView === "CLIENT"
+                ? "Client Account"
+                : roleView === "LAWYER"
+                ? "Enrolled Advocate"
+                : "System Administrator"}
+            </span>
+          </span>
         </div>
       </div>
 
