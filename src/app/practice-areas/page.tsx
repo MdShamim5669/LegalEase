@@ -18,21 +18,14 @@ import {
   Landmark,
   Search,
   ArrowRight,
-  Sparkles,
   CheckCircle2,
-  Clock,
-  HelpCircle,
   Filter,
   ChevronDown,
   ChevronUp,
-  ChevronRight,
-  BadgeCheck,
   X,
   CreditCard,
   FileCheck2,
   Gavel,
-  ShieldCheck,
-  Anchor,
   Home,
   Cpu,
 } from "lucide-react";
@@ -559,7 +552,7 @@ export default function PracticeAreasPage() {
             </div>
             <h3 className="text-lg font-bold text-white">No practice areas match your search</h3>
             <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto">
-              Try searching for terms like "land", "bail", "cheque", "family", "cyber", or reset your filters.
+              Try searching for terms like &quot;land&quot;, &quot;bail&quot;, &quot;cheque&quot;, &quot;family&quot;, &quot;cyber&quot;, or reset your filters.
             </p>
             <button
               onClick={() => {
@@ -967,7 +960,7 @@ export default function PracticeAreasPage() {
                       key={idx}
                       className="p-2.5 rounded-xl bg-slate-850 border border-slate-800 text-slate-300"
                     >
-                      "{q}"
+                      &ldquo;{q}&rdquo;
                     </div>
                   ))}
                 </div>
