@@ -1,0 +1,62 @@
+{
+  "meta": {
+    "brand_name": "LegalEase",
+    "description": "Core design tokens for LegalEase UI and backend presentation (PRD v2.0).",
+    "currency": "BDT",
+    "currency_symbol": "৳",
+    "timezone": "Asia/Dhaka"
+  },
+  "colors": {
+    "primary": {
+      "DEFAULT": "#0F172A",
+      "hover": "#1E293B",
+      "foreground": "#FFFFFF"
+    },
+    "secondary": {
+      "DEFAULT": "#F1F5F9",
+      "hover": "#E2E8F0",
+      "foreground": "#0F172A"
+    },
+    "accent": {
+      "DEFAULT": "#0284C7",
+      "hover": "#0369A1",
+      "foreground": "#FFFFFF"
+    },
+    "background": "#FFFFFF",
+    "foreground": "#0F172A",
+    "card": "#FFFFFF",
+    "card_foreground": "#0F172A",
+    "border": "#E2E8F0",
+    "muted": "#F8FAFC",
+    "muted_foreground": "#64748B",
+    "destructive": "#EF4444",
+    "success": "#10B981",
+    "warning": "#F59E0B",
+    "status": {
+      "consultation": {
+        "scheduled": { "badge": "#DBEAFE", "text": "#1E40AF", "border": "#93C5FD" },
+        "inprogress": { "badge": "#FEF3C7", "text": "#92400E", "border": "#FCD34D" },
+        "completed": { "badge": "#D1FAE5", "text": "#065F46", "border": "#6EE7B7" },
+        "canceled": { "badge": "#F1F5F9", "text": "#475569", "border": "#CBD5E1" }
+      },
+      "payment": {
+        "paid": { "badge": "#DCFCE7", "text": "#166534", "border": "#86EFAC" },
+        "unpaid": { "badge": "#FFE4E6", "text": "#9F1239", "border": "#FDA4AF" },
+        "refunded": { "badge": "#F3E8FF", "text": "#6B21A8", "border": "#D8B4FE" }
+      }
+    }
+  },
+  "typography": {
+    "font_family_headings": ["Inter", "sans-serif"],
+    "font_family_body": ["Roboto", "sans-serif"],
+    "font_weight_bold": "700",
+    "font_weight_semibold": "600",
+    "font_weight_normal": "400"
+  },
+  "ui": {
+    "border_radius_default": "0.5rem",
+    "border_radius_small": "0.25rem",
+    "border_radius_large": "0.75rem",
+    "spacing_base_unit": "4px"
+  }
+}
