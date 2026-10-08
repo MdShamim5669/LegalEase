@@ -89,6 +89,13 @@ export default function HomePage() {
 
   const lawyers = lawyersResponse?.data || [];
 
+  // 4. Total Verified Lawyers in Directory
+  const { data: totalLawyersRes } = useQuery({
+    queryKey: ["total-lawyers-count"],
+    queryFn: () => apiClient<any[]>("/lawyers?limit=1"),
+  });
+  const totalDirectoryCount = totalLawyersRes?.meta?.total || 30;
+
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const params = new URLSearchParams();
@@ -563,7 +570,7 @@ export default function HomePage() {
               href="/lawyers"
               className="text-xs font-bold text-slate-900 bg-slate-100 hover:bg-slate-200 px-5 py-2.5 rounded-xl transition inline-flex items-center gap-1.5"
             >
-              <span>Explore Full Directory ({lawyers.length})</span>
+              <span>Explore Full Directory ({totalDirectoryCount})</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -736,8 +743,14 @@ export default function HomePage() {
               <Scale className="w-12 h-12 text-slate-400 mx-auto" />
               <h3 className="text-base font-bold text-slate-800">No Advocates in this Category</h3>
               <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                No lawyers found matching the current specialization filter. Try choosing &quot;All Practice Areas&quot;.
+                No lawyers found matching the current specialization filter.
               </p>
+              <button
+                onClick={() => setSelectedPracticeAreaId("ALL")}
+                className="mt-2 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-white hover:bg-slate-800 transition cursor-pointer"
+              >
+                Reset to All Practice Areas
+              </button>
             </div>
           )}
         </div>
